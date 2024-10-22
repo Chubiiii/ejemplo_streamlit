@@ -40,9 +40,13 @@ with st.sidebar:
     # Muestra el valor actual del slider en la barra lateral.
     st.write("Bins=", div)
 
+i = random.randint(0, 6)
+color1 = colores[i]
+i = random.randint(0, 6)
+color2 = colores[i]
 # Desplegamos un histograma con los datos del eje X
 fig, ax = plt.subplots(1, 2, figsize=(10, 3))
-ax[0].hist(df["Age"], bins=div)
+ax[0].hist(df["Age"], bins=div, color = color1)
 ax[0].set_xlabel("Edad")
 ax[0].set_ylabel("Frecuencia")
 ax[0].set_title("Histograma de edades")
@@ -55,7 +59,7 @@ cant_male = len(df_male)
 df_female = df[df["Sex"] == "female"]
 cant_female = len(df_female)
 
-ax[1].bar(["Masculino", "Femenino"], [cant_male, cant_female], color = "red")
+ax[1].bar(["Masculino", "Femenino"], [cant_male, cant_female], color = color2)
 ax[1].set_xlabel("Sexo")
 ax[1].set_ylabel("Cantidad")
 ax[1].set_title('Distribución de hombres y mujeres')
