@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+import random
 
 # Carga el archivo CSV "database_titanic.csv" en un DataFrame de pandas.
 df = pd.read_csv("database_titanic.csv")
@@ -11,6 +12,8 @@ st.write("""
 ## Gráficos usando la base de datos del Titanic
 """)
 
+colores = ["red", "blue", "green", "purple", "yellow"]
+
 # Usando la notación "with" para crear una barra lateral en la aplicación Streamlit.
 with st.sidebar:
     st.sidebar.title("Mi primera barra lateral de streamlit")
@@ -18,7 +21,10 @@ with st.sidebar:
     st.sidebar.write("Esto es una barra lateral")
 
     st.sidebar.image("imagen1.png")
-
+    
+    if st.sidebar.button("Haz clic para cambiar el color de los graficos")
+        color1 = colores[random.randint(0, 6)]
+        st.sidebar.write(color)
     if st.sidebar.button("Haz clic pero en la barra lateral"):
         st.sidebar.write("Haz hecho clic en el boton de la barra lateral")
 
@@ -50,7 +56,7 @@ cant_male = len(df_male)
 df_female = df[df["Sex"] == "female"]
 cant_female = len(df_female)
 
-ax[1].bar(["Masculino", "Femenino"], [cant_male, cant_female], color = "red")
+ax[1].bar(["Masculino", "Femenino"], [cant_male, cant_female], color = color1)
 ax[1].set_xlabel("Sexo")
 ax[1].set_ylabel("Cantidad")
 ax[1].set_title('Distribución de hombres y mujeres')
