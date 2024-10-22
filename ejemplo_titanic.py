@@ -19,7 +19,7 @@ with st.sidebar:
 
     st.sidebar.image("imagen1.png")
 
-    if st.sidebar.button("Haz clic pero en la barra lateral")
+    if st.sidebar.button("Haz clic pero en la barra lateral"):
         st.sidebar.write("Haz hecho clic en el boton de la barra lateral")
 
     user_input = st.sidebar.text_input("escribe algo en la barra")
