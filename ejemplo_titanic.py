@@ -12,7 +12,7 @@ st.write("""
 ## Gráficos usando la base de datos del Titanic
 """)
 
-colores = ["red", "blue", "green", "purple", "yellow"]
+colores = ["red", "blue", "green", "purple", "yellow", "brown"]
 
 # Usando la notación "with" para crear una barra lateral en la aplicación Streamlit.
 with st.sidebar:
