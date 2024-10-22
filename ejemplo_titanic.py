@@ -40,9 +40,9 @@ with st.sidebar:
     # Muestra el valor actual del slider en la barra lateral.
     st.write("Bins=", div)
 
-i = random.randint(0, 6)
+i = random.randint(0, 5)
 color1 = colores[i]
-i = random.randint(0, 6)
+i = random.randint(0, 5)
 color2 = colores[i]
 # Desplegamos un histograma con los datos del eje X
 fig, ax = plt.subplots(1, 2, figsize=(10, 3))
