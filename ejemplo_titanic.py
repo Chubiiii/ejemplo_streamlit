@@ -20,7 +20,10 @@ with st.sidebar:
     st.sidebar.image("imagen1.png")
 
     if st.sidebar.button("Haz clic pero en la barra lateral")
-        st.sidebar.write("Haz hecho clic en el boton de la barra lateral)
+        st.sidebar.write("Haz hecho clic en el boton de la barra lateral")
+
+    user_input = st.sidebar.text_input("escribe algo en la barra")
+    st.sidebar.write("Escribiste en la barra:", user_input)
     
     # Título para la sección de opciones en la barra lateral.
     st.write("# Opciones")
