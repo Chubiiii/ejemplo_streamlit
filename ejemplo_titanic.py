@@ -22,7 +22,7 @@ with st.sidebar:
 
     st.sidebar.image("imagen1.png")
     
-    if st.sidebar.button("Haz clic para cambiar el color de los graficos")
+    if st.sidebar.button("Haz clic para cambiar el color de los graficos"):
         color1 = colores[random.randint(0, 6)]
         st.sidebar.write(color)
     if st.sidebar.button("Haz clic pero en la barra lateral"):
