@@ -13,6 +13,15 @@ st.write("""
 
 # Usando la notación "with" para crear una barra lateral en la aplicación Streamlit.
 with st.sidebar:
+    st.sidebar.title("Mi primera barra lateral de streamlit")
+    st.sidebar.header("Hola barra lateral!")
+    st.sidebar.write("Esto es una barra lateral")
+
+    st.sidebar.image("imagen1.png")
+
+    if st.sidebar.button("Haz clic pero en la barra lateral")
+        st.sidebar.write("Haz hecho clic en el boton de la barra lateral)
+    
     # Título para la sección de opciones en la barra lateral.
     st.write("# Opciones")
     
