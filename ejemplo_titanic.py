@@ -31,6 +31,7 @@ else:
             st.sidebar.title("Mi primera barra lateral de Streamlit")
             st.sidebar.header("Hola barra lateral!")
             st.sidebar.write("Esto es una barra lateral")
+            st.sidebar.image("imagen1.png")
             
             # Botones interactivos en la barra lateral
             if st.sidebar.button("Haz clic para cambiar el color de los gráficos"):
