@@ -44,7 +44,7 @@ else:
 
                 # Asegúrate de tener una imagen llamada "imagen1.png" en el directorio correcto
                 # Si no la tienes, comenta o elimina la siguiente línea
-                # st.sidebar.image("imagen1.png")
+                st.sidebar.image("imagen1.png")
                 
                 if st.sidebar.button("Haz clic para cambiar el color de los gráficos"):
                     st.sidebar.write(colores)
