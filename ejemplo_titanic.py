@@ -23,9 +23,9 @@ else:
         # Mi primera aplicación interactiva
         ## Gráficos usando la base de datos
         """)
-        
+
         colores = ["red", "blue", "green", "purple", "yellow", "brown"]
-        
+
         # Barra lateral interactiva
         with st.sidebar:
             st.sidebar.title("Mi primera barra lateral de Streamlit")
@@ -34,7 +34,7 @@ else:
             
             # Asegúrate de tener una imagen llamada "imagen1.png" en el directorio correcto
             # Si no la tienes, puedes comentar o eliminar la siguiente línea
-            st.sidebar.image("imagen1.png")
+            # st.sidebar.image("imagen1.png")
             
             # Botones interactivos en la barra lateral
             if st.sidebar.button("Haz clic para cambiar el color de los gráficos"):
@@ -53,6 +53,9 @@ else:
             div = st.slider('Número de bins:', 1, 50, 10)
             st.write("Bins =", div)
         
+        # Mostrar el número de filas antes del procesamiento
+        st.write(f"Número de filas antes del procesamiento: {len(df)}")
+        
         # Seleccionar colores aleatorios para los gráficos
         color1 = random.choice(colores)
         color2 = random.choice(colores)
@@ -69,12 +72,18 @@ else:
         try:
             df['Timestamp'] = pd.to_datetime(
                 df['Fecha medida'].astype(str) + ' ' + df['Hora medida'].astype(str),
-                format='%d/%m/%y %H:%M:%S',
+                dayfirst=True,
                 errors='coerce',
-                dayfirst=True
+                infer_datetime_format=True
             )
+            # Mostrar el número de filas después de crear 'Timestamp'
+            st.write(f"Número de filas después de crear 'Timestamp': {len(df)}")
+            
             # Eliminar filas con Timestamps inválidos
             df = df.dropna(subset=['Timestamp'])
+            
+            # Mostrar el número de filas después de eliminar filas con 'Timestamp' nulo
+            st.write(f"Número de filas después de eliminar filas con 'Timestamp' nulo: {len(df)}")
             
             # Gráfico de líneas de 'P(W)' a lo largo del tiempo
             fig2, ax2 = plt.subplots()
@@ -90,8 +99,8 @@ else:
         st.write("""
         ## Muestra de datos cargados
         """)
-        # Mostrar una tabla con las primeras filas del DataFrame
-        st.table(df)
+        # Mostrar todo el DataFrame con capacidad de desplazamiento
+        st.dataframe(df)
         
     except pd.errors.ParserError as pe:
         st.error(f"Error al parsear el archivo CSV: {pe}")
