@@ -34,7 +34,7 @@ else:
             
             # Asegúrate de tener una imagen llamada "imagen1.png" en el directorio correcto
             # Si no la tienes, puedes comentar o eliminar la siguiente línea
-            # st.sidebar.image("imagen1.png")
+            st.sidebar.image("imagen1.png")
             
             # Botones interactivos en la barra lateral
             if st.sidebar.button("Haz clic para cambiar el color de los gráficos"):
@@ -91,7 +91,7 @@ else:
         ## Muestra de datos cargados
         """)
         # Mostrar una tabla con las primeras filas del DataFrame
-        st.table(df.head())
+        st.table(df)
         
     except pd.errors.ParserError as pe:
         st.error(f"Error al parsear el archivo CSV: {pe}")
