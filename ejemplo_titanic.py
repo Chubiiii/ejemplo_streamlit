@@ -23,7 +23,7 @@ with st.sidebar:
     st.sidebar.image("imagen1.png")
     
     if st.sidebar.button("Haz clic para cambiar el color de los graficos"):
-        st.sidebar.write(color)
+        st.sidebar.write(colores)
     if st.sidebar.button("Haz clic pero en la barra lateral"):
         st.sidebar.write("Haz hecho clic en el boton de la barra lateral")
 
