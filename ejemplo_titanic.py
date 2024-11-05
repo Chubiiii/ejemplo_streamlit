@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import random
 
 # Carga el archivo CSV "database_titanic.csv" en un DataFrame de pandas.
-df = pd.read_csv("database_titanic.csv")
+df = pd.read_csv("T-001-S1.csv")
 
 # Muestra un título y una descripción en la aplicación Streamlit.
 st.write("""
@@ -45,24 +45,21 @@ color1 = colores[i]
 i = random.randint(0, 5)
 color2 = colores[i]
 # Desplegamos un histograma con los datos del eje X
-fig, ax = plt.subplots(1, 2, figsize=(10, 3))
-ax[0].hist(df["Age"], bins=div, color = color1)
-ax[0].set_xlabel("Edad")
-ax[0].set_ylabel("Frecuencia")
-ax[0].set_title("Histograma de edades")
+fig, ax = plt.subplots()
+ax.scatter(df['I(A)'], df['P(W)'], color='blue', alpha=0.5)
+ax.set_xlabel('Corriente (A)')
+ax.set_ylabel('Potencia (W)')
+ax.set_title('Dispersión de Corriente vs Potencia')
 
-# Tomando datos para hombres y contando la cantidad
-df_male = df[df["Sex"] == "male"]
-cant_male = len(df_male)
 
-# Tomando datos para mujeres y contando la cantidad
-df_female = df[df["Sex"] == "female"]
-cant_female = len(df_female)
-
-ax[1].bar(["Masculino", "Femenino"], [cant_male, cant_female], color = color2)
-ax[1].set_xlabel("Sexo")
-ax[1].set_ylabel("Cantidad")
-ax[1].set_title('Distribución de hombres y mujeres')
+# Combinar Fecha y Hora en un timestamp
+df['Timestamp'] = pd.to_datetime(df['Fecha medida'] + ' ' + df['Hora medida'], format='%d/%m/%y %H:%M:%S')
+fig, ax = plt.subplots()
+ax.plot(df['Timestamp'], df['P(W)'], color='green', linestyle='-', marker='o')
+ax.set_xlabel('Tiempo')
+ax.set_ylabel('Potencia (W)')
+ax.set_title('Potencia a lo largo del Tiempo')
+plt.xticks(rotation=45)
 
 # Desplegamos el gráfico
 st.pyplot(fig)
