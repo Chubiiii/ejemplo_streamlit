@@ -3,11 +3,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import random
 import os
-from datetime import datetime
-
-# Título de la Aplicación
-st.title("Aplicación Interactiva de Datos")
-st.write("## Visualización de Datos con Streamlit")
 
 # Ruta al archivo CSV
 ruta_csv = "T-001-S1.csv"
@@ -22,92 +17,82 @@ else:
         
         # Limpiar los nombres de las columnas (eliminar espacios al inicio y final)
         df.columns = df.columns.str.strip()
+
+        # Mostrar un título y una descripción en la aplicación Streamlit.
+        st.write("""
+        # Mi primera aplicación interactiva
+        ## Gráficos usando la base de datos
+        """)
         
-        # Mostrar las columnas disponibles para depuración
-        st.sidebar.header("Configuración de Datos")
-        st.sidebar.write("**Columnas disponibles:**")
-        st.sidebar.write(df.columns.tolist())
+        colores = ["red", "blue", "green", "purple", "yellow", "brown"]
         
-        # Verificar si las columnas necesarias existen
-        columnas_necesarias = ['I(A)', 'P(W)', 'Fecha medida', 'Hora medida']
-        columnas_faltantes = [col for col in columnas_necesarias if col not in df.columns]
-        if columnas_faltantes:
-            st.error(f"Las siguientes columnas faltan en el archivo CSV: {', '.join(columnas_faltantes)}")
-        else:
-            # Selección de columnas para los gráficos
-            opciones_columnas = {
-                'Eje X': ['I(A)', 'P(W)', 'Fecha medida', 'Hora medida'],
-                'Eje Y': ['I(A)', 'P(W)', 'Fecha medida', 'Hora medida']
-            }
-            eje_x = st.sidebar.selectbox("Selecciona la columna para el Eje X:", opciones_columnas['Eje X'], index=0)
-            eje_y = st.sidebar.selectbox("Selecciona la columna para el Eje Y:", opciones_columnas['Eje Y'], index=1)
+        # Barra lateral interactiva
+        with st.sidebar:
+            st.sidebar.title("Mi primera barra lateral de Streamlit")
+            st.sidebar.header("Hola barra lateral!")
+            st.sidebar.write("Esto es una barra lateral")
             
-            # Selección de rango de fechas
-            df['Fecha'] = pd.to_datetime(df['Fecha medida'], dayfirst=True, errors='coerce')
-            fecha_min = df['Fecha'].min()
-            fecha_max = df['Fecha'].max()
-            rango_fechas = st.sidebar.date_input("Selecciona el rango de fechas:", [fecha_min, fecha_max])
+            # Asegúrate de tener una imagen llamada "imagen1.png" en el directorio correcto
+            # Si no la tienes, puedes comentar o eliminar la siguiente línea
+            # st.sidebar.image("imagen1.png")
             
-            if len(rango_fechas) != 2:
-                st.error("Por favor, selecciona un rango válido de fechas.")
-            else:
-                # Filtrar el DataFrame por el rango de fechas seleccionado
-                inicio, fin = rango_fechas
-                mask = (df['Fecha'] >= pd.to_datetime(inicio)) & (df['Fecha'] <= pd.to_datetime(fin))
-                df_filtrado = df.loc[mask]
-                
-                st.write(f"### Datos filtrados desde {inicio} hasta {fin}")
-                st.write(f"Total de registros: {df_filtrado.shape[0]}")
-                
-                # Selección de colores para los gráficos
-                colores = ["red", "blue", "green", "purple", "yellow", "brown"]
-                color_x = st.sidebar.selectbox("Selecciona el color para el Eje X:", colores, index=1)
-                color_y = st.sidebar.selectbox("Selecciona el color para el Eje Y:", colores, index=2)
-                
-                # Opciones para mostrar gráficos
-                mostrar_scatter = st.sidebar.checkbox("Mostrar Gráfico de Dispersión", value=True)
-                mostrar_line = st.sidebar.checkbox("Mostrar Gráfico de Líneas", value=True)
-                
-                # Crear Timestamp combinando Fecha y Hora
-                df_filtrado['Hora'] = pd.to_datetime(df_filtrado['Hora medida'], format='%H:%M:%S', errors='coerce').dt.time
-                df_filtrado['Timestamp'] = df_filtrado.apply(
-                    lambda row: datetime.combine(row['Fecha'], row['Hora']) if pd.notnull(row['Hora']) else pd.NaT,
-                    axis=1
-                )
-                df_filtrado = df_filtrado.dropna(subset=['Timestamp'])
-                
-                # Gráfico de Dispersión
-                if mostrar_scatter:
-                    fig1, ax1 = plt.subplots()
-                    ax1.scatter(df_filtrado[eje_x], df_filtrado[eje_y], color=color_x, alpha=0.5)
-                    ax1.set_xlabel(eje_x)
-                    ax1.set_ylabel(eje_y)
-                    ax1.set_title(f'Dispersión de {eje_x} vs {eje_y}')
-                    st.pyplot(fig1)
-                
-                # Gráfico de Líneas
-                if mostrar_line:
-                    fig2, ax2 = plt.subplots()
-                    ax2.plot(df_filtrado['Timestamp'], df_filtrado[eje_y], color=color_y, linestyle='-', marker='o')
-                    ax2.set_xlabel('Tiempo')
-                    ax2.set_ylabel(eje_y)
-                    ax2.set_title(f'{eje_y} a lo largo del Tiempo')
-                    plt.xticks(rotation=45)
-                    st.pyplot(fig2)
-                
-                # Mostrar una muestra de los datos cargados
-                st.write("## Muestra de Datos Cargados")
-                st.table(df_filtrado.head())
-                
-                # Opcional: Descargar datos filtrados
-                csv = df_filtrado.to_csv(index=False)
-                st.download_button(
-                    label="Descargar Datos Filtrados",
-                    data=csv,
-                    file_name='datos_filtrados.csv',
-                    mime='text/csv',
-                )
-                
+            # Botones interactivos en la barra lateral
+            if st.sidebar.button("Haz clic para cambiar el color de los gráficos"):
+                st.sidebar.write(colores)
+            if st.sidebar.button("Haz clic pero en la barra lateral"):
+                st.sidebar.write("Has hecho clic en el botón de la barra lateral")
+            
+            # Entrada de texto en la barra lateral
+            user_input = st.sidebar.text_input("Escribe algo en la barra")
+            st.sidebar.write("Escribiste en la barra:", user_input)
+            
+            # Título para la sección de opciones en la barra lateral.
+            st.write("# Opciones")
+            
+            # Control deslizante (slider) para el número de bins
+            div = st.slider('Número de bins:', 1, 50, 10)
+            st.write("Bins =", div)
+        
+        # Seleccionar colores aleatorios para los gráficos
+        color1 = random.choice(colores)
+        color2 = random.choice(colores)
+        
+        # Gráfico de dispersión de 'I(A)' vs 'P(W)'
+        fig1, ax1 = plt.subplots()
+        ax1.scatter(df['I(A)'], df['P(W)'], color=color1, alpha=0.5)
+        ax1.set_xlabel('Corriente (A)')
+        ax1.set_ylabel('Potencia (W)')
+        ax1.set_title('Dispersión de Corriente vs Potencia')
+        st.pyplot(fig1)
+        
+        # Combinar Fecha y Hora en un timestamp
+        try:
+            df['Timestamp'] = pd.to_datetime(
+                df['Fecha medida'].astype(str) + ' ' + df['Hora medida'].astype(str),
+                format='%d/%m/%y %H:%M:%S',
+                errors='coerce',
+                dayfirst=True
+            )
+            # Eliminar filas con Timestamps inválidos
+            df = df.dropna(subset=['Timestamp'])
+            
+            # Gráfico de líneas de 'P(W)' a lo largo del tiempo
+            fig2, ax2 = plt.subplots()
+            ax2.plot(df['Timestamp'], df['P(W)'], color=color2, linestyle='-', marker='o')
+            ax2.set_xlabel('Tiempo')
+            ax2.set_ylabel('Potencia (W)')
+            ax2.set_title('Potencia a lo largo del Tiempo')
+            plt.xticks(rotation=45)
+            st.pyplot(fig2)
+        except Exception as e:
+            st.error(f"Error al combinar Fecha y Hora: {e}")
+        
+        st.write("""
+        ## Muestra de datos cargados
+        """)
+        # Mostrar una tabla con las primeras filas del DataFrame
+        st.table(df.head())
+        
     except pd.errors.ParserError as pe:
         st.error(f"Error al parsear el archivo CSV: {pe}")
     except UnicodeDecodeError as ude:
